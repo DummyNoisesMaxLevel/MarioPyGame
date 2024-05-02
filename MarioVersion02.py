@@ -8,11 +8,6 @@ mixer.init()
 global death
 death = False
 
-mainMusic = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Super mario bros death Sound Effect.mp3")
-deathSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Super mario bros death Sound Effect.mp3")
-jumpingSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Mario-jump-sound\\Mario-jump-sound.mp3")
-coinSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Mario-coin-sound\\Mario-coin-sound.mp3")
-
 playMainMusic = False
 playJumpingSound = False
 playCoinSound = False
@@ -242,28 +237,7 @@ goombaSurface2 = drawArrayIntoSurface([
 
 
 pygame.display.flip()
-global coinSurface
-coinSurface = drawArrayIntoSurface([
-            [3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 1, 1, 0, 0, 0, 0, 1, 1, 3, 3, 3, 3],
-            [3, 3, 3, 1, 0, 0, 4, 4, 4, 4, 4, 6, 1, 3, 3, 3],
-            [3, 3, 3, 1, 0, 4, 2, 0, 0, 2, 4, 6, 1, 3, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 4, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 1, 0, 4, 2, 0, 4, 4, 1, 2, 4, 5, 1, 3, 3],
-            [3, 3, 3, 1, 4, 2, 2, 1, 1, 2, 4, 6, 1, 3, 3, 3],
-            [3, 3, 3, 1, 4, 4, 4, 4, 4, 4, 6, 6, 1, 3, 3, 3],
-            [3, 3, 3, 3, 1, 1, 5, 5, 5, 5, 1, 1, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3]         
-], 2)
 
-
-pygame.display.flip()
 global groundBrickSurface
 groundBrickSurface = drawArrayIntoSurface(data=[
             [9, 7, 7, 7, 7, 7, 7, 7, 7, 1, 9, 7, 7, 7, 7, 9],
@@ -458,6 +432,68 @@ for row in jumpingMarioData:
     backwardsJumpingMarioData.append(row[::-1])
 backwardsJumpingMarioSurface = drawArrayIntoSurface(backwardsJumpingMarioData)
 
+pygame.display.flip()
+global coinSurface1
+coinSurface1 = drawArrayIntoSurface([
+            [3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 1, 0, 0, 0, 0, 1, 1, 3, 3, 3, 3],
+            [3, 3, 3, 1, 0, 0, 4, 4, 4, 4, 4, 6, 1, 3, 3, 3],
+            [3, 3, 3, 1, 0, 4, 2, 0, 0, 2, 4, 6, 1, 3, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 2, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 4, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 1, 0, 4, 2, 0, 4, 4, 1, 2, 4, 5, 1, 3, 3],
+            [3, 3, 3, 1, 4, 2, 2, 1, 1, 2, 4, 6, 1, 3, 3, 3],
+            [3, 3, 3, 1, 4, 4, 4, 4, 4, 4, 6, 6, 1, 3, 3, 3],
+            [3, 3, 3, 3, 1, 1, 5, 5, 5, 5, 1, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3]         
+], 2)
+ 
+pygame.display.flip()
+global coinSurface2
+coinSurface2 = drawArrayIntoSurface([
+            [3, 3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 0, 0, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 4, 4, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 2, 2, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 2, 2, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 4, 4, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 6, 6, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3]         
+], 2)
+ 
+pygame.display.flip()
+global coinSurface3
+coinSurface3 = drawArrayIntoSurface([
+            [3, 3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 0, 0, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 4, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 0, 2, 2, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],   
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 1, 0, 4, 0, 1, 4, 6, 1, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 4, 2, 2, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 1, 4, 4, 4, 6, 1, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 1, 6, 6, 1, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 3, 3]         
+], 2)
 
 class sprites():
 
@@ -470,11 +506,9 @@ class sprites():
         
     def drawGoomba1InClass(self, window, x, y):
         window.blit(goombaSurface1, (x + offsetX, y))
+        
     def drawGoomba2InClass(self, window, x, y):
         window.blit(goombaSurface2, (x + offsetX, y))
-        
-    def drawCoinInClass(self, window, x, y):
-        window.blit(coinSurface, (x + offsetX, y))
         
     def drawGroundBrickInClass(self, window, x, y):   
         window.blit(groundBrickSurface, (x, y))
@@ -517,6 +551,15 @@ class sprites():
 
     def drawDeadMarioInClass(self, window, x, y):
         window.blit(deadMarioSurface, (x, y))
+
+    def drawCoin1InClass(self, window, x, y):
+        window.blit(coinSurface1, (x + offsetX, y))
+        
+    def drawCoin2InClass(self, window, x, y):
+        window.blit(coinSurface2, (x + offsetX, y))
+        
+    def drawCoin3InClass(self, window, x, y):
+        window.blit(coinSurface3, (x + offsetX, y))
         
 drawSprite = sprites()
 def drawMario(direction, isJumping, isFalling, moving, ticks):
@@ -665,10 +708,9 @@ def adjustAdditiveY(additiveY):
                     if blockType == "lb":
                         #Make the coin appear above the Hit Lucky Block
                         blockPositions.append([blockX + 16, blockY + 16, "c"])
-                        coinMap.append([blockX + 16, blockY + 16, [False, 0, 0], 16])
+                        coinMap.append([blockX + 16, blockY + 16, [False, 0, 0], 16, 0])
                         if playCoinSound == True:
                             coinSound.play()
-                        coinSound.play()
                         #Turn Lucky Block into a Hit Lucky Block
                         
                         blockPositions[blockPositions.index(blockObject)] = [blockX, blockY, "hlb"]
@@ -729,6 +771,7 @@ def adjustAdditiveX(additiveX):
     
 def drawMap():
     global blockPositions
+    global coinMap
     def drawGround():
         groundOffset = offsetX % 64
         for j in range(int(screenWidth/64 + 2)):
@@ -747,9 +790,22 @@ def drawMap():
         for stairsBlock in stairsBlockMap:
             drawSprite.drawStairsBlockInClass(window, stairsBlock[0], stairsBlock[1])
             blockPositions.append([stairsBlock[0], stairsBlock[1], "sb"])
-        for coin in coinMap:
-            drawSprite.drawCoinInClass(window, coin[0], coin[1])
-            blockPositions.append([coin[0], coin[1], "c"])
+        for i in range(len(coinMap)):
+            if coinMap[i][4] >= 10:
+                coinMap[i][4] = 1
+            if coinMap[i][4] >= 7:
+                drawSprite.drawCoin1InClass(window, coinMap[i][0], coinMap[i][1])
+                coinMap[i][4] += 1
+            elif coinMap[i][4] >= 4:
+                drawSprite.drawCoin2InClass(window, coinMap[i][0], coinMap[i][1])
+                coinMap[i][4] += 1
+            elif coinMap[i][4] >= 1:
+                drawSprite.drawCoin3InClass(window, coinMap[i][0], coinMap[i][1])
+                coinMap[i][4] += 1
+                
+            blockPositions.append([coinMap[i][0], coinMap[i][1], "c"])
+
+            
         for hitLuckyBlock in hitLuckyBlockMap:
             drawSprite.drawHitLuckyBlockInClass(window, hitLuckyBlock[0], hitLuckyBlock[1])
             blockPositions.append([hitLuckyBlock[0], hitLuckyBlock[1], "hlb"])
@@ -770,7 +826,6 @@ def drawMap():
 while running:
     if death:
         print("You died")
-        deathSound.play()
         break
     goombaAnimationCounter += 1
     blockPositions = []
@@ -793,7 +848,6 @@ while running:
                 if startRender > endJump + 100 and jumping == False and falling == False:
                     if playJumpingSound == True:
                         jumpingSound.play()
-                    jumpingSound.play()
                     jumping = True
                     marioVelocity = startVelocity
         elif event.type == pygame.KEYUP:
@@ -828,7 +882,7 @@ while running:
             if hitLuckyBlockMap[i][3] < -4:
                 hitLuckyBlockMap[i][3] = 4
                 hitLuckyBlockMap[i][2][0] = False
-                coinMap[coinMap.index([hitLuckyBlockMap[i][0] + 16, hitLuckyBlockMap[i][1] + 16, [False, 0, 0], 16])] = [hitLuckyBlockMap[i][0] + 16, hitLuckyBlockMap[i][1] + 16, [True, hitLuckyBlockMap[i][2][1] + 16, hitLuckyBlockMap[i][2][2] + 16], 16]
+                coinMap[coinMap.index([hitLuckyBlockMap[i][0] + 16, hitLuckyBlockMap[i][1] + 16, [False, 0, 0], 16, 0])] = [hitLuckyBlockMap[i][0] + 16, hitLuckyBlockMap[i][1] + 16, [True, hitLuckyBlockMap[i][2][1] + 16, hitLuckyBlockMap[i][2][2] + 16], 16, 1]
                 hitLuckyBlockMap[i][2] = [False, 0, 0]
     for i in range(0, len(coinMap)):
         if coinMap[i][2][0] == True:
@@ -889,7 +943,7 @@ pygame.time.wait(300)
 while True:
     pygame.time.wait(30)
     window.fill((100, 149, 237))
-    if marioY >= screenHeight:
+    if marioY >= screenHeight + 100000:
         pygame.time.wait(100)
         break
     drawSprite.drawDeadMarioInClass(window, marioX, marioY)
