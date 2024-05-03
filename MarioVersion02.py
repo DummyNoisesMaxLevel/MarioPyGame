@@ -2,8 +2,15 @@
 import pygame
 import sys
 from pygame import mixer  # Load the popular external library
+import time
 
 mixer.init()
+
+mainMusic = pygame.mixer.music.load("C:\\Users\\s-xiangj\\Downloads\\music.mp3")
+coinSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Mario-coin-sound\\Mario-coin-sound.mp3")
+jumpingSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Mario-jump-sound\\Mario-jump-sound.mp3")
+stompSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\hvtrs8_-tjeouqhpommiilgfoo.lev_qownfs-wcv-sob-sob]svoop,wcv")
+pygame.mixer.music.play(-1)
 
 global death
 death = False
@@ -30,7 +37,6 @@ def onDeath():
     global death
     playDeathSoundFunction()
     death = True
-    
 
 pygame.init()
 
@@ -63,16 +69,21 @@ pygame.display.flip()
 global blockPositions
 blockPositions = []
 
-
 global brickMap
 brickMap = [[512+64 * 11, groundHeight - 64*4, [False, 0, 0], 4], [512+64 * 13, groundHeight - 64*4, [False, 0, 0], 4], [512+64 * 15, groundHeight - 64*4, [False, 0, 0], 4],
            [960 + 64 * 44,  groundHeight - 64 * 5, [False, 0, 0], 4], [960 + 64 * 45,  groundHeight - 64 * 5, [False, 0, 0], 4], [512+64 * 63, groundHeight - 64*3, [False, 0, 0], 4],
-           [512+64 * 64, groundHeight - 64*3, [False, 0, 0], 4], [512+64 * 65, groundHeight - 64*3, [False, 0, 0], 4], [512+64 * 68, groundHeight - 64*6, [False, 0, 0], 4],
+           [512+64 * 64, groundHeight - 64*3, [False, 0, 0], 4], [512+64 * 65, groundHeight - 64*3, [False, 0, 0], 4],
            [512+64 * 69, groundHeight - 64*6, [False, 0, 0], 4], [512+64 * 70, groundHeight - 64*6, [False, 0, 0], 4], [512+64 * 65, groundHeight - 64*9, [False, 0, 0], 4],
            [512+64 * 64, groundHeight - 64*9, [False, 0, 0], 4], [512+64 * 63, groundHeight - 64*9, [False, 0, 0], 4], [512+64 * 62, groundHeight - 64*9, [False, 0, 0], 4],
            [512+64 * 61, groundHeight - 64*9, [False, 0, 0], 4], [512+64 * 60, groundHeight - 64*9, [False, 0, 0], 4], [512+64 * 59, groundHeight - 64*9, [False, 0, 0], 4], [512+ 64*58, groundHeight - 64*9, [False, 0, 0], 4], [512+ 64*58, groundHeight - 64*10, [False, 0, 0], 4],
            [512+64 * 59, groundHeight - 64*13, [False, 0, 0], 4], [512+64 * 61, groundHeight - 64*13, [False, 0, 0], 4], [512+64 * 63, groundHeight - 64*13, [False, 0, 0], 4],
-           [512+64 * 65, groundHeight - 64*13, [False, 0, 0], 4]]
+           [512+64 * 65, groundHeight - 64*13, [False, 0, 0], 4], [512+64 * 80, groundHeight - 64, [False, 0, 0], 4], [512+64 * 80, groundHeight - 64 * 2, [False, 0, 0], 4],
+           [512+64 * 80, groundHeight - 64 * 3, [False, 0, 0], 4], [512+64 * 80, groundHeight - 64 * 4, [False, 0, 0], 4],
+            [512+64 * 80, groundHeight - 64 * 5, [False, 0, 0], 4], [512+64 * 80, groundHeight - 64 * 6, [False, 0, 0], 4],
+            [512+64 * 80, groundHeight - 64 * 7, [False, 0, 0], 4], [512+64 * 80, groundHeight - 64 * 8, [False, 0, 0], 4], [512+64 * 80, groundHeight - 64 * 9, [False, 0, 0], 4],
+            [512+64 * 80, groundHeight - 64 * 10, [False, 0, 0], 4], [512+64 * 71, groundHeight - 64 * 9, [False, 0, 0], 4],
+            [512+64 * 66, groundHeight - 64 * 13, [False, 0, 0], 4], [512+64 * 58, groundHeight - 64 * 13, [False, 0, 0], 4], [512+64 * 67, groundHeight - 64 * 13, [False, 0, 0], 4]
+            ]
 '''b'''
 global luckyBlockMap
 luckyBlockMap = [[512+64 * 7, groundHeight - 64*4, [False, 0, 0], 4], [512+64 * 12, groundHeight - 64*4, [False, 0, 0], 4], [512+64 * 14, groundHeight - 64*4, [False, 0, 0], 4],
@@ -84,7 +95,8 @@ global hitLuckyBlockMap
 hitLuckyBlockMap = []
 '''hlb'''
 global goombaMap
-goombaMap = [[960 + 64 * 30,  groundHeight - 64 * 1], [960 + 64 * 32,  groundHeight - 64 * 1], [512+64 * 60, groundHeight - 64*10], [512+64 * 63, groundHeight - 64*10], [512+64 * 69, groundHeight - 64*7]]
+goombaMap = [[960 + 64 * 30,  groundHeight - 64 * 1], [960 + 64 * 32,  groundHeight - 64 * 1], [512+64 * 60, groundHeight - 64*10],
+             [512+64 * 63, groundHeight - 64*10], [512+64 * 69, groundHeight - 64*7], [512+64 * 71, groundHeight - 64 * 10]]
 '''g'''
 global coinMap
 coinMap = []
@@ -235,6 +247,27 @@ goombaSurface2 = drawArrayIntoSurface([
             [3, 3, 1, 1, 1, 1, 1, 3, 3, 1, 1, 1, 3, 3, 3, 3]      
 ])
 
+pygame.display.flip()
+global goombaDeadSurface
+goombaDeadSurface = drawArrayIntoSurface([
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 8, 8, 8, 8, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 8, 8, 8, 8, 8, 8, 8, 8, 3, 3, 3, 3],
+            [3, 3, 8, 8, 1, 1, 8, 8, 8, 8, 1, 1, 8, 8, 3, 3],
+            [3, 8, 8, 7, 7, 7, 1, 1, 1, 1, 7, 7, 7, 8, 8, 3],
+            [3, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 3],
+            [3, 3, 3, 3, 7, 7, 7, 7, 7, 7, 7, 7, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3],   
+            [3, 3, 1, 1, 1, 1, 1, 3, 3, 1, 1, 1, 1, 1, 3, 3]
+                    
+])
 
 pygame.display.flip()
 
@@ -509,6 +542,9 @@ class sprites():
         
     def drawGoomba2InClass(self, window, x, y):
         window.blit(goombaSurface2, (x + offsetX, y))
+
+    def drawGoombaDeadInClass(self, window, x, y):
+        window.blit(goombaDeadSurface, (x + offsetX, y))
         
     def drawGroundBrickInClass(self, window, x, y):   
         window.blit(groundBrickSurface, (x, y))
@@ -625,6 +661,10 @@ global goombaAnimationCounter
 goombaAnimationCounter = 0
 global goombaAnimationController
 goombaAnimationController = 1
+global goombaDeadCounter
+goombaDeadCounter = 0
+global goombaDead
+goombaDead = [False, 0, 0]
 
 
 global endJump
@@ -656,6 +696,9 @@ def adjustAdditiveY(additiveY):
     global falling
     global blockPositions
     global brickMap
+    global goombaDead
+    global goombaMap
+    global goombaDeadCounter
     
 
     if twoRangeActuallyOverlap(marioY + 64, marioY + 64 + additiveY, groundHeight, groundHeight + 64):
@@ -685,11 +728,12 @@ def adjustAdditiveY(additiveY):
                     marioVelocity = 0
                     if blockType == "g":
                         marioVelocity = 10
+                        stompSound.play()
                         falling = False
                         jumping = True
                         ### Play Sound Kill Goomba
-                        blockPositions.remove(blockObject)
-                        goombaMap.remove([blockX, blockY])  
+                        goombaDead = [True, blockX, blockY]
+                        goombaDeadCounter = 0 
     elif additiveY < 0:
         #Jumping
         for blockObject in blockPositions:
@@ -712,7 +756,7 @@ def adjustAdditiveY(additiveY):
                         if playCoinSound == True:
                             coinSound.play()
                         #Turn Lucky Block into a Hit Lucky Block
-                        
+                        coinSound.play()
                         blockPositions[blockPositions.index(blockObject)] = [blockX, blockY, "hlb"]
                         luckyBlockMap.remove([blockX, blockY, [False, 0, 0], 4])
                         hitLuckyBlockMap.append([blockX, blockY, [True, blockX, blockY], 4])
@@ -781,6 +825,9 @@ def drawMap():
     def drawBlocks():
         global goombaAnimationCounter
         global goombaAnimationController
+        global goombaDeadCounter
+        global goombaDead
+        global goombaMap
         for luckyBlock in luckyBlockMap:
             drawSprite.drawLuckyBlockInClass(window, luckyBlock[0], luckyBlock[1])
             blockPositions.append([luckyBlock[0], luckyBlock[1], "lb"])
@@ -810,6 +857,13 @@ def drawMap():
             drawSprite.drawHitLuckyBlockInClass(window, hitLuckyBlock[0], hitLuckyBlock[1])
             blockPositions.append([hitLuckyBlock[0], hitLuckyBlock[1], "hlb"])
         for goomba in goombaMap:
+            if goombaDead[0] and goomba[0] == goombaDead[1] and goomba[1] == goombaDead[2]:
+                drawSprite.drawGoombaDeadInClass(window, goomba[0], goomba[1])
+                blockPositions.append([goomba[0], goomba[1], "g"])
+                if goombaDeadCounter == 7:
+                    goombaMap.remove([goomba[0], goomba[1]])
+                    goombaDead = [False, 0, 0]
+                continue    
             if goombaAnimationCounter == 5:
                 goombaAnimationController *= -1
                 goombaAnimationCounter = 0
@@ -822,12 +876,13 @@ def drawMap():
   
     drawGround()
     drawBlocks()
-
+start = time.time()
 while running:
     if death:
         print("You died")
         break
     goombaAnimationCounter += 1
+    goombaDeadCounter += 1
     blockPositions = []
     marioAdditiveX = 0
     marioAdditiveY = 0
@@ -845,9 +900,10 @@ while running:
             elif event.key == pygame.K_LEFT:
                 lastKeyPressed = "left"
             if event.key == pygame.K_UP:
-                if startRender > endJump + 100 and jumping == False and falling == False:
+                if startRender > endJump and jumping == False and falling == False:
                     if playJumpingSound == True:
                         jumpingSound.play()
+                    jumpingSound.play()
                     jumping = True
                     marioVelocity = startVelocity
         elif event.type == pygame.KEYUP:
@@ -935,19 +991,27 @@ while running:
     if totalFrames % 100 == 0:
         print("The last 100 frames took an average of " + str(totalFrameTime / 100) + " ms to render")
         print("There have been " + str(badTicks) + " bad ticks so far")
-
-deadMarioVelocity = 16
-window.fill((100, 149, 237))
-drawSprite.drawDeadMarioInClass(window, marioX, marioY)
-pygame.time.wait(300)
-while True:
-    pygame.time.wait(30)
-    window.fill((100, 149, 237))
-    if marioY >= screenHeight + 100000:
-        pygame.time.wait(100)
+    if luckyBlockMap == [] and goombaMap == []:
+        end = time.time()
+        print("You finished 100% speedrun in " + str(end - start))
         break
+if death:
+    deadMarioVelocity = 16
+    window.fill((100, 149, 237))
     drawSprite.drawDeadMarioInClass(window, marioX, marioY)
-    marioY -= deadMarioVelocity
-    deadMarioVelocity -= gravity
-    pygame.display.flip()
+    pygame.mixer.music.load("C:\\Users\\s-xiangj\\Downloads\\Super mario bros death Sound Effect.mp3")
+    pygame.mixer.music.play()
+    pygame.time.wait(300)
+    while True:
+        pygame.time.wait(30)
+        window.fill((100, 149, 237))
+        if marioY >= screenHeight + 100000:
+            pygame.time.wait(100)
+            break
+        drawSprite.drawDeadMarioInClass(window, marioX, marioY)
+        marioY -= deadMarioVelocity
+        deadMarioVelocity -= gravity
+        pygame.display.flip()
+else:
+    pygame.time.wait(10000)
 pygame.quit()
