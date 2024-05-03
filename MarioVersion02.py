@@ -1,17 +1,17 @@
+
 '''These lines are at the top of our main project'''
 import pygame
 import sys
 from pygame import mixer  # Load the popular external library
 import time
+import time
 
 mixer.init()
-
 mainMusic = pygame.mixer.music.load("C:\\Users\\s-xiangj\\Downloads\\music.mp3")
 coinSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Mario-coin-sound\\Mario-coin-sound.mp3")
 jumpingSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\Mario-jump-sound\\Mario-jump-sound.mp3")
 stompSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\hvtrs8_-tjeouqhpommiilgfoo.lev_qownfs-wcv-sob-sob]svoop,wcv")
 pygame.mixer.music.play(-1)
-
 global death
 death = False
 
@@ -19,6 +19,7 @@ playMainMusic = False
 playJumpingSound = False
 playCoinSound = False
 playDeathSound = False
+playStompSound = False
 
 if playMainMusic:
     mainMusic = pygame.mixer.music.load("music.mp3")
@@ -27,6 +28,8 @@ if playJumpingSound:
     jumpingSound = pygame.mixer.Sound("jump.mp3")
 if playCoinSound:
     coinSound = pygame.mixer.Sound("coin.mp3")
+if playStompSound:
+    stompSound = pygame.mixer.Sound("C:\\Users\\s-xiangj\\Downloads\\hvtrs8_-tjeouqhpommiilgfoo.lev_qownfs-wcv-sob-sob]svoop,wcv")
 
 def playDeathSoundFunction():
     if playDeathSound:
@@ -96,7 +99,8 @@ hitLuckyBlockMap = []
 '''hlb'''
 global goombaMap
 goombaMap = [[960 + 64 * 30,  groundHeight - 64 * 1], [960 + 64 * 32,  groundHeight - 64 * 1], [512+64 * 60, groundHeight - 64*10],
-             [512+64 * 63, groundHeight - 64*10], [512+64 * 69, groundHeight - 64*7], [512+64 * 71, groundHeight - 64 * 10]]
+             [512+64 * 63, groundHeight - 64*10], [512+64 * 69, groundHeight - 64*7], [512+64 * 71, groundHeight - 64 * 10],
+             [512+64 * 81, groundHeight - 64 * 1]]
 '''g'''
 global coinMap
 coinMap = []
@@ -113,6 +117,18 @@ stairsBlockMap = [[960 + 64 * 26,  groundHeight - 64 * 1], [960 + 64 * 27,  grou
                  ]
 
 '''sb'''
+print(pygame.font.get_fonts())
+def renderText(leftEdge, topEdge, textColor, backgroundColor, text, fontSize, isCentered):
+    font = pygame.font.SysFont("euclid", fontSize)
+    renderedText = font.render(text, True, textColor, backgroundColor)
+    textRectangle = renderedText.get_rect()
+    if isCentered:
+        textRectangle.center = [leftEdge, topEdge]
+    else:
+        textRectangle.left = leftEdge
+        textRectangle.top = topEdge
+    window.blit(renderedText, textRectangle)
+    
 def drawArrayIntoSurface(data, multiplier=4, stack=1):
     surface = pygame.Surface((len(data[0])*multiplier, len(data)*multiplier*stack))
     def drawPixel(surface, horizontalNum, verticalNum, color):
@@ -330,7 +346,7 @@ deadMarioSurface = drawArrayIntoSurface([
             [3, 3,10,10,10,11, 4,11,11, 4,11,10,10,10, 3, 3],
             [3, 3,10,10,10,11,11,11,11,11,11,10,10,10, 3, 3],
             [3, 3, 3, 3,10,11,11,11,11,11,11,10, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]         
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],      
 ])
 
 pygame.display.flip()
@@ -657,6 +673,8 @@ global jumping
 jumping = False
 global falling
 falling = False
+global bouncing
+bouncing = False
 global goombaAnimationCounter
 goombaAnimationCounter = 0
 global goombaAnimationController
@@ -696,8 +714,8 @@ def adjustAdditiveY(additiveY):
     global falling
     global blockPositions
     global brickMap
-    global goombaDead
     global goombaMap
+    global goombaDead
     global goombaDeadCounter
     
 
@@ -707,6 +725,7 @@ def adjustAdditiveY(additiveY):
         additiveY = distanceTravelable
         jumping = False
         falling = False
+        bouncing = False
         endJump = pygame.time.get_ticks()
         marioVelocity = 0
 
@@ -728,12 +747,15 @@ def adjustAdditiveY(additiveY):
                     marioVelocity = 0
                     if blockType == "g":
                         marioVelocity = 10
-                        stompSound.play()
+                        if playStompSound:
+                            stompSound.play()
                         falling = False
                         jumping = True
                         ### Play Sound Kill Goomba
                         goombaDead = [True, blockX, blockY]
                         goombaDeadCounter = 0 
+                    else:
+                        bouncing = False
     elif additiveY < 0:
         #Jumping
         for blockObject in blockPositions:
@@ -755,12 +777,12 @@ def adjustAdditiveY(additiveY):
                         coinMap.append([blockX + 16, blockY + 16, [False, 0, 0], 16, 0])
                         if playCoinSound == True:
                             coinSound.play()
-                        #Turn Lucky Block into a Hit Lucky Block
                         coinSound.play()
+                        #Turn Lucky Block into a Hit Lucky Block
                         blockPositions[blockPositions.index(blockObject)] = [blockX, blockY, "hlb"]
                         luckyBlockMap.remove([blockX, blockY, [False, 0, 0], 4])
                         hitLuckyBlockMap.append([blockX, blockY, [True, blockX, blockY], 4])
-                    elif blockType == "g":
+                    elif blockType == "g" and bouncing == False:
                         onDeath()
                     elif blockType == "b":
                         brickMap.remove([blockX, blockY, [False, 0, 0], 4])
@@ -779,8 +801,15 @@ def adjustAdditiveY(additiveY):
 
     return additiveY
 
-def adjustAdditiveX(additiveX):
+def adjustAdditiveX(additiveX, additiveY):
     global death
+    global goombaMap
+    global falling
+    global jumping
+    global marioVelocity
+    global goombaDead
+    global goombaDeadCounter
+    global bouncing
     if marioAdditiveX > 0:
         #Moving Right 
         for blockObject in blockPositions:
@@ -793,8 +822,20 @@ def adjustAdditiveX(additiveX):
                 else:
                     distanceTravelable = blockX - realMarioX - 64
                     additiveX = distanceTravelable
-                    if blockType == "g":    
-                        onDeath()
+                    if blockType == "g":
+                        if additiveY > 0:
+                            marioVelocity = 10
+                            if playStompSound:
+                                stompSound.play()
+                            stompSound.play()
+                            falling = False
+                            jumping = True
+                            bouncing = True
+                            ### Play Sound Kill Goomba
+                            goombaDead = [True, blockX, blockY]
+                            goombaDeadCounter = 0
+                        else:
+                            onDeath()
     elif additiveX < 0:
         #Moving Left
         for blockObject in blockPositions:
@@ -808,7 +849,17 @@ def adjustAdditiveX(additiveX):
                     distanceTravelable = blockX - realMarioX + 64
                     additiveX = distanceTravelable
                     if blockType == "g":
-                        onDeath()
+                        if additiveY > 0:
+                            marioVelocity = 10
+                            if playStompSound:
+                                stompSound.play()
+                            falling = False
+                            jumping = True
+                            ### Play Sound Kill Goomba
+                            goombaDead = [True, blockX, blockY]
+                            goombaDeadCounter = 0
+                        else:
+                            onDeath()
 
     return additiveX
             
@@ -872,8 +923,8 @@ def drawMap():
                 blockPositions.append([goomba[0], goomba[1], "g"])
             if goombaAnimationController == -1:
                 drawSprite.drawGoomba2InClass(window, goomba[0], goomba[1])
-                blockPositions.append([goomba[0], goomba[1], "g"])
-  
+                
+            blockPositions.append([goomba[0], goomba[1], "g"])
     drawGround()
     drawBlocks()
 start = time.time()
@@ -962,7 +1013,7 @@ while running:
 
     marioAdditiveY = adjustAdditiveY(marioAdditiveY)
     marioY += marioAdditiveY
-    marioAdditiveX = adjustAdditiveX(marioAdditiveX)
+    marioAdditiveX = adjustAdditiveX(marioAdditiveX, marioAdditiveY)
     if marioX + marioAdditiveX <= screenWidth/2 - 64 and marioX + marioAdditiveX >= 256:
         marioX += marioAdditiveX
     else:
@@ -979,8 +1030,13 @@ while running:
     frames[cursor] = renderTime
     totalFrameTime += renderTime
     cursor = (cursor + 1) % 100
-
+    
     pygame.display.flip()
+
+    if luckyBlockMap == [] and goombaMap == []:
+        end = time.time()
+        finalTime = end - start
+        break
     
     timeToWait = int(1000/fps - renderTime)
     if ( timeToWait > 0 ):
@@ -991,10 +1047,6 @@ while running:
     if totalFrames % 100 == 0:
         print("The last 100 frames took an average of " + str(totalFrameTime / 100) + " ms to render")
         print("There have been " + str(badTicks) + " bad ticks so far")
-    if luckyBlockMap == [] and goombaMap == []:
-        end = time.time()
-        print("You finished 100% speedrun in " + str(end - start))
-        break
 if death:
     deadMarioVelocity = 16
     window.fill((100, 149, 237))
@@ -1004,14 +1056,19 @@ if death:
     pygame.time.wait(300)
     while True:
         pygame.time.wait(30)
-        window.fill((100, 149, 237))
+        window.fill((0, 0, 0))
         if marioY >= screenHeight + 100000:
             pygame.time.wait(100)
             break
         drawSprite.drawDeadMarioInClass(window, marioX, marioY)
+        renderText(960, 540, [255, 255, 255], (0, 0, 0), "Game Over", 70, True)
         marioY -= deadMarioVelocity
         deadMarioVelocity -= gravity
         pygame.display.flip()
 else:
-    pygame.time.wait(10000)
+    window.fill((0, 0, 0))
+    renderText(960, 540, [255, 255, 255], (0, 0, 0), str(finalTime), 70, True)
+    pygame.display.flip()
+    pygame.time.wait(5000)
 pygame.quit()
+    
